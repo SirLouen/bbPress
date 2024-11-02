@@ -134,8 +134,8 @@ class BBP_Tests_Topics_Functions_Status extends BBP_UnitTestCase {
 		$this->assertSame( 2, $count );
 
 		// ToDo: Result should be 0 when a topic has no replies
-	//	$last_reply_id = bbp_get_topic_last_reply_id( $t );
-	//	$this->assertSame( $t, $last_reply_id );
+		//	$last_reply_id = bbp_get_topic_last_reply_id( $t );
+		//	$this->assertSame( $t, $last_reply_id );
 
 		$last_active_id = bbp_get_topic_last_active_id( $t );
 		$this->assertSame( $t, $last_active_id );
@@ -194,8 +194,8 @@ class BBP_Tests_Topics_Functions_Status extends BBP_UnitTestCase {
 		$this->assertSame( $t, $last_active_id );
 
 		// ToDo: Result should be topic time when a topic has no replies
-	//	$last_active_time = bbp_get_forum_last_active_time( $f );
-	//	$this->assertSame( $topic_time, $last_active_time );
+		//	$last_active_time = bbp_get_forum_last_active_time( $f );
+		//	$this->assertSame( $topic_time, $last_active_time );
 
 		$count = bbp_get_topic_reply_count( $t, true, true );
 		$this->assertSame( 0, $count );
@@ -204,8 +204,8 @@ class BBP_Tests_Topics_Functions_Status extends BBP_UnitTestCase {
 		$this->assertSame( 2, $count );
 
 		// ToDo: Result should be 0 when a topic has no replies
-	//	$last_reply_id = bbp_get_topic_last_reply_id( $t );
-	//	$this->assertSame( $t, $last_reply_id );
+		//	$last_reply_id = bbp_get_topic_last_reply_id( $t );
+		//	$this->assertSame( $t, $last_reply_id );
 
 		$last_active_id = bbp_get_topic_last_active_id( $t );
 		$this->assertSame( $t, $last_active_id );
@@ -270,7 +270,7 @@ class BBP_Tests_Topics_Functions_Status extends BBP_UnitTestCase {
 		$count = bbp_get_forum_topic_count( $f, false, true );
 		$this->assertSame( 1, $count );
 
-		$count = bbp_get_forum_topic_count_hidden( $f, true );
+		$count = bbp_get_forum_topic_count_hidden( $f, true, true );
 		$this->assertSame( 0, $count );
 
 		$count = bbp_get_forum_reply_count( $f, false, true );
