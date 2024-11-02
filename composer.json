@@ -5,7 +5,9 @@
 	"require-dev": {
 		"phpcompatibility/phpcompatibility-wp": "^2.1",
 		"wp-coding-standards/wpcs": "^2.3",
-		"dealerdirect/phpcodesniffer-composer-installer": "^0.6.2"
+		"dealerdirect/phpcodesniffer-composer-installer": "^1.0.0",
+		"phpunit/phpunit": "^9",
+		"yoast/phpunit-polyfills": "^3.0"
 	},
 	"minimum-stability": "dev",
 	"prefer-stable": true,
@@ -15,6 +17,18 @@
 		],
 		"lint": [
 			"@php ./vendor/squizlabs/php_codesniffer/bin/phpcs"
+		],
+		"test": [
+			"@php ./vendor/bin/phpunit -c phpunit.xml.dist"
+		],
+		"phpunit": [
+			"@test"
 		]
+	},
+	"config": {
+		"allow-plugins": {
+			"composer/installers": true,
+			"dealerdirect/phpcodesniffer-composer-installer": true
+		}
 	}
 }
