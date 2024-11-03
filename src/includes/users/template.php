@@ -2058,7 +2058,7 @@ function bbp_author_link( $args = array() ) {
 
 			// Empty array
 			$links  = array();
-			$sprint = '<span %1$s>%2$s</span>';
+			$sprint = '<span%1$s>%2$s</span>';
 
 			// Wrap each link
 			foreach ( $author_links as $link => $link_text ) {
