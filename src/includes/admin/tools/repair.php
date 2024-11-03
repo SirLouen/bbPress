@@ -83,10 +83,23 @@ function bbp_admin_repair_page() {
 							<input id="cb-select-all-1" type="checkbox">
 						</td>
 						<th scope="col" id="description" class="manage-column column-primary column-description sortable <?php echo ( 'priority' === $orderby ) ? esc_attr( $order ) : 'asc'; ?>">
-							<a href="<?php echo esc_url( bbp_get_admin_repair_tool_page_url( array(
-									'orderby' => 'priority',
-									'order'   => $new_order
-								) ) ); ?>"><span><?php esc_html_e( 'Description', 'bbpress' ); ?></span><span class="sorting-indicator"></span>
+							<a href="
+								<?php 
+								echo esc_url( 
+									bbp_get_admin_repair_tool_page_url( 
+										array(
+											'orderby' => 'priority',
+											'order'   => $new_order
+										) 
+									) 
+								); 
+								?>">
+								<span>
+									<?php 
+									esc_html_e( 'Description', 'bbpress' ); 
+									?>
+								</span>
+								<span class="sorting-indicator"></span>
 							</a>
 						</th>
 						<th scope="col" id="components" class="manage-column column-components">
@@ -96,7 +109,7 @@ function bbp_admin_repair_page() {
 							<a href="<?php echo esc_url( bbp_get_admin_repair_tool_page_url( array(
 									'orderby' => 'overhead',
 									'order'   => $new_order
-								) ) ); ?>"><span><?php esc_html_e( 'Overhead', 'bbpress' ); ?></span><span class="sorting-indicator"></span>
+) ) ); ?>"><span><?php esc_html_e( 'Overhead', 'bbpress' ); ?></span><span class="sorting-indicator"></span>
 							</a>
 						</th>
 					</tr>
@@ -118,7 +131,7 @@ function bbp_admin_repair_page() {
 
 										// Optional description
 										if ( ! empty( $item['description'] ) ) :
-											echo '<p class="description">' . esc_html( $item['description'] ) . '</p>';
+										echo '<p class="description">' . esc_html( $item['description'] ) . '</p>';
 										endif;
 
 									?><div class="row-actions hide-if-no-js">
@@ -512,7 +525,7 @@ function bbp_admin_repair_user_topic_count() {
 		$insert_values[] = "('{$insert_row->post_author}', '{$key}', '{$insert_row->_count}')";
 	}
 
-	if ( !count( $insert_values ) ) {
+	if ( ! count( $insert_values ) ) {
 		return array( 2, sprintf( $statement, $result ) );
 	}
 
@@ -562,7 +575,7 @@ function bbp_admin_repair_user_reply_count() {
 		$insert_values[] = "('{$insert_row->post_author}', '{$key}', '{$insert_row->_count}')";
 	}
 
-	if ( !count( $insert_values ) ) {
+	if ( ! count( $insert_values ) ) {
 		return array( 2, sprintf( $statement, $result ) );
 	}
 
@@ -632,7 +645,7 @@ function bbp_admin_repair_user_favorites() {
 		unset( $favorites, $favorites_joined );
 	}
 
-	if ( !count( $values ) ) {
+	if ( ! count( $values ) ) {
 		$result = esc_html__( 'Nothing to remove!', 'bbpress' );
 		return array( 0, sprintf( $statement, $result ) );
 	}
@@ -701,7 +714,7 @@ function bbp_admin_repair_user_topic_subscriptions() {
 		unset( $subscriptions, $subscriptions_joined );
 	}
 
-	if ( !count( $values ) ) {
+	if ( ! count( $values ) ) {
 		$result = esc_html__( 'Nothing to remove!', 'bbpress' );
 		return array( 0, sprintf( $statement, $result ) );
 	}
@@ -770,7 +783,7 @@ function bbp_admin_repair_user_forum_subscriptions() {
 		unset( $subscriptions, $subscriptions_joined );
 	}
 
-	if ( !count( $values ) ) {
+	if ( ! count( $values ) ) {
 		$result = esc_html__( 'Nothing to remove!', 'bbpress' );
 		return array( 0, sprintf( $statement, $result ) );
 	}
