@@ -535,15 +535,15 @@ class BBP_Tests_Forums_Functions_Counts extends BBP_UnitTestCase {
 
 		bbp_update_forum_topic_count_hidden( $f );
 
-		$count = bbp_get_forum_topic_count_hidden( $f, true );
-		$this->assertSame( 0, $count );;
+		$count = bbp_get_forum_topic_count_hidden( $f, true, true );
+		$this->assertSame( 0, $count );
 
 		bbp_spam_topic( $t[2] );
 
 		bbp_update_forum_topic_count_hidden( $f );
 
 		$count = bbp_get_forum_topic_count_hidden( $f, true );
-		$this->assertSame( 1, $count );;
+		$this->assertSame( 1, $count );
 
 		bbp_unapprove_topic( $t[0] );
 
