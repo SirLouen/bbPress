@@ -2314,33 +2314,30 @@ function bbp_pre_get_posts_normalize_forum_visibility( $posts_query = null ) {
 		return;
 	}
 
-	// Forums
-	if ( in_array( bbp_get_forum_post_type(), $post_types, true ) ) {
-
-		/** Default ***********************************************************/
-
-		// Add all supported forum visibilities
-		$posts_query->set( 'post_status', array_keys( bbp_get_forum_visibilities() ) );
-
-		// Get forums to exclude
-		$forum_ids = bbp_exclude_forum_ids( 'array' );
-
-		// Excluding some forums
-		if ( ! empty( $forum_ids ) ) {
-
-			// Get any existing not-in queries
-			$not_in = $posts_query->get( 'post__not_in', array() );
-
-			// Add our not-in to existing
-			$not_in = array_unique( array_merge( $not_in, $forum_ids ) );
-
-			// Set the new not-in val
-			$posts_query->set( 'post__not_in', $not_in );
-		}
-	}
-
-	// Any bbPress post type
 	if ( ! array_diff( $post_types, bbp_get_post_types() ) ) {
+	
+		// Specific normalization for Forums Post Type
+		if ( in_array( bbp_get_forum_post_type(), $post_types, true ) ) {
+
+			// Add all supported forum visibilities
+			$posts_query->set( 'post_status', array_keys( bbp_get_forum_visibilities() ) );
+
+			// Get forums to exclude
+			$forum_ids = bbp_exclude_forum_ids( 'array' );
+
+			// Excluding some forums
+			if ( ! empty( $forum_ids ) ) {
+
+				// Get any existing not-in queries
+				$not_in = $posts_query->get( 'post__not_in', array() );
+
+				// Add our not-in to existing
+				$not_in = array_unique( array_merge( $not_in, $forum_ids ) );
+
+				// Set the new not-in val
+				$posts_query->set( 'post__not_in', $not_in );
+			}
+		}
 
 		// Get forums to exclude
 		$forum_ids = bbp_exclude_forum_ids( 'meta_query' );
