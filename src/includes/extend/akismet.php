@@ -664,6 +664,9 @@ class BBP_Akismet {
 				}
 			}
 		}
+
+		// Let plugins do their thing
+		do_action( 'bbp_akismet_update_post_meta', $post_id );
 	}
 
 	/**
@@ -675,7 +678,7 @@ class BBP_Akismet {
 	 * @param string $message
 	 * @param string $event
 	 */
-	private function update_post_history( $post_id = 0, $message = null, $event = null ) {
+	public function update_post_history( $post_id = 0, $message = null, $event = null ) {
 
 		// Define local variable(s)
 		$user = '';
