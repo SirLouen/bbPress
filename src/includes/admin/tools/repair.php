@@ -106,10 +106,23 @@ function bbp_admin_repair_page() {
 							<span><?php esc_html_e( 'Components', 'bbpress' ); ?></span>
 						</th>
 						<th scope="col" id="overhead" class="manage-column column-overhead sortable <?php echo ( 'overhead' === $orderby ) ? esc_attr( $order ) : 'asc'; ?>">
-							<a href="<?php echo esc_url( bbp_get_admin_repair_tool_page_url( array(
-									'orderby' => 'overhead',
-									'order'   => $new_order
-) ) ); ?>"><span><?php esc_html_e( 'Overhead', 'bbpress' ); ?></span><span class="sorting-indicator"></span>
+							<a href="
+								<?php 
+								echo esc_url( 
+									bbp_get_admin_repair_tool_page_url( 
+										array(
+											'orderby' => 'overhead',
+											'order'   => $new_order
+										) 
+									) 
+								); 
+								?>">
+								<span>
+									<?php 
+									esc_html_e( 'Overhead', 'bbpress' ); 
+									?>
+								</span>
+								<span class="sorting-indicator"></span>
 							</a>
 						</th>
 					</tr>
@@ -131,7 +144,7 @@ function bbp_admin_repair_page() {
 
 										// Optional description
 										if ( ! empty( $item['description'] ) ) :
-										echo '<p class="description">' . esc_html( $item['description'] ) . '</p>';
+											echo '<p class="description">' . esc_html( $item['description'] ) . '</p>';
 										endif;
 
 									?><div class="row-actions hide-if-no-js">
