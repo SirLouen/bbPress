@@ -621,13 +621,13 @@ class BBP_Topics_Admin {
 				$is_super  = ( false === $is_sticky ) && ! empty( $_GET['super'] ) && ( '1' === $_GET['super'] )
 					? true
 					: false;
-				$message   = ( true  === $is_sticky )
+				$message   = ( true === $is_sticky )
 					? 'unstuck'
 					: 'stuck';
-				$message   = ( true  === $is_super )
+				$message   = ( true === $is_super )
 					? 'super_sticky'
 					: $message;
-				$success   = ( true  === $is_sticky )
+				$success   = ( true === $is_sticky )
 					? bbp_unstick_topic( $topic_id )
 					: bbp_stick_topic( $topic_id, $is_super );
 
@@ -721,7 +721,7 @@ class BBP_Topics_Admin {
 				break;
 
 			case 'super_sticky' :
-				$message = ( true ===  $is_failure )
+				$message = ( true === $is_failure )
 					? sprintf( esc_html__( 'There was a problem sticking the topic "%1$s" to front.', 'bbpress' ), $topic_title )
 					: sprintf( esc_html__( 'Topic "%1$s" successfully stuck to front.',               'bbpress' ), $topic_title );
 				break;

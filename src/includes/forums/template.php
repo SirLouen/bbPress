@@ -293,7 +293,7 @@ function bbp_get_forum( $forum, $output = OBJECT, $filter = 'raw' ) {
 	}
 
 	// Bail if not correct post type
-	if (  bbp_get_forum_post_type() !== $forum->post_type ) {
+	if ( bbp_get_forum_post_type() !== $forum->post_type ) {
 		return null;
 	}
 
