@@ -970,7 +970,7 @@ function bbp_body_class( $wp_classes = array(), $custom_classes = false ) {
 	// Default to no classes
 	$bbp_classes = array();
 
-	/** Archives **************************************************************/
+    // Archives
 
 	if ( bbp_is_forum_archive() ) {
 		$bbp_classes[] = bbp_get_forum_post_type() . '-archive';
@@ -978,106 +978,85 @@ function bbp_body_class( $wp_classes = array(), $custom_classes = false ) {
 	} elseif ( bbp_is_topic_archive() ) {
 		$bbp_classes[] = bbp_get_topic_post_type() . '-archive';
 
-	/** Topic Tags ************************************************************/
+    // Topic Tags
+    } elseif ( bbp_is_topic_tag() ) {
+        $bbp_classes[] = bbp_get_topic_tag_tax_id();
+        $bbp_classes[] = bbp_get_topic_tag_tax_id().'-'.bbp_get_topic_tag_slug();
+        $bbp_classes[] = bbp_get_topic_tag_tax_id().'-'.bbp_get_topic_tag_id();
+    } elseif ( bbp_is_topic_tag_edit() ) {
+        $bbp_classes[] = bbp_get_topic_tag_tax_id().'-edit';
+        $bbp_classes[] = bbp_get_topic_tag_tax_id().'-'.bbp_get_topic_tag_slug().'-edit';
+        $bbp_classes[] = bbp_get_topic_tag_tax_id().'-'.bbp_get_topic_tag_id().'-edit';
 
-	} elseif ( bbp_is_topic_tag() ) {
-		$bbp_classes[] = bbp_get_topic_tag_tax_id();
-		$bbp_classes[] = bbp_get_topic_tag_tax_id() . '-' . bbp_get_topic_tag_slug();
-		$bbp_classes[] = bbp_get_topic_tag_tax_id() . '-' . bbp_get_topic_tag_id();
-	} elseif ( bbp_is_topic_tag_edit() ) {
-		$bbp_classes[] = bbp_get_topic_tag_tax_id() . '-edit';
-		$bbp_classes[] = bbp_get_topic_tag_tax_id() . '-' . bbp_get_topic_tag_slug() . '-edit';
-		$bbp_classes[] = bbp_get_topic_tag_tax_id() . '-' . bbp_get_topic_tag_id()   . '-edit';
+    // Components
+    } elseif ( bbp_is_single_forum() ) {
+        $bbp_classes[] = bbp_get_forum_post_type();
+    } elseif ( bbp_is_single_topic() ) {
+        $bbp_classes[] = bbp_get_topic_post_type();
+    } elseif ( bbp_is_single_reply() ) {
+        $bbp_classes[] = bbp_get_reply_post_type();
+    } elseif ( bbp_is_topic_edit() ) {
+        $bbp_classes[] = bbp_get_topic_post_type().'-edit';
+    } elseif ( bbp_is_topic_merge() ) {
+        $bbp_classes[] = bbp_get_topic_post_type().'-merge';
+    } elseif ( bbp_is_topic_split() ) {
+        $bbp_classes[] = bbp_get_topic_post_type().'-split';
+    } elseif ( bbp_is_reply_edit() ) {
+        $bbp_classes[] = bbp_get_reply_post_type().'-edit';
+    } elseif ( bbp_is_reply_move() ) {
+        $bbp_classes[] = bbp_get_reply_post_type().'-move';
+    } elseif ( bbp_is_single_view() ) {
+        $bbp_classes[] = 'bbp-view';
+        $bbp_classes[] = 'bbp-view-'.bbp_get_view_id();
 
-	/** Components ************************************************************/
+    // User
+    } elseif ( bbp_is_single_user_edit() ) {
+        $bbp_classes[] = 'bbp-user-edit';
+        $bbp_classes[] = 'single';
+        $bbp_classes[] = 'singular';
+    } elseif ( bbp_is_single_user() ) {
+        $bbp_classes[] = 'bbp-user-page';
+        $bbp_classes[] = 'single';
+        $bbp_classes[] = 'singular';
+    } elseif ( bbp_is_user_home() ) {
+        $bbp_classes[] = 'bbp-user-home';
+        $bbp_classes[] = 'single';
+        $bbp_classes[] = 'singular';
+    } elseif ( bbp_is_user_home_edit() ) {
+        $bbp_classes[] = 'bbp-user-home-edit';
+        $bbp_classes[] = 'single';
+        $bbp_classes[] = 'singular';
+    } elseif ( bbp_is_topics_created() ) {
+        $bbp_classes[] = 'bbp-topics-created';
+        $bbp_classes[] = 'single';
+        $bbp_classes[] = 'singular';
+    } elseif ( bbp_is_replies_created() ) {
+        $bbp_classes[] = 'bbp-replies-created';
+        $bbp_classes[] = 'single';
+        $bbp_classes[] = 'singular';
+    } elseif ( bbp_is_favorites() ) {
+        $bbp_classes[] = 'bbp-favorites';
+        $bbp_classes[] = 'single';
+        $bbp_classes[] = 'singular';
+    } elseif ( bbp_is_subscriptions() ) {
+        $bbp_classes[] = 'bbp-subscriptions';
+        $bbp_classes[] = 'single';
+        $bbp_classes[] = 'singular';
 
-	} elseif ( bbp_is_single_forum() ) {
-		$bbp_classes[] = bbp_get_forum_post_type();
+    // Search
+    } elseif ( bbp_is_search() ) {
+        $bbp_classes[] = 'bbp-search';
+        $bbp_classes[] = 'forum-search';
+    } elseif ( bbp_is_search_results() ) {
+        $bbp_classes[] = 'bbp-search-results';
+        $bbp_classes[] = 'forum-search-results';
 
-	} elseif ( bbp_is_single_topic() ) {
-		$bbp_classes[] = bbp_get_topic_post_type();
+    // Shortcodes
+    } elseif ( bbp_has_shortcode() ) {
+        $bbp_classes[] = 'bbp-shortcode';
+    }
 
-	} elseif ( bbp_is_single_reply() ) {
-		$bbp_classes[] = bbp_get_reply_post_type();
-
-	} elseif ( bbp_is_topic_edit() ) {
-		$bbp_classes[] = bbp_get_topic_post_type() . '-edit';
-
-	} elseif ( bbp_is_topic_merge() ) {
-		$bbp_classes[] = bbp_get_topic_post_type() . '-merge';
-
-	} elseif ( bbp_is_topic_split() ) {
-		$bbp_classes[] = bbp_get_topic_post_type() . '-split';
-
-	} elseif ( bbp_is_reply_edit() ) {
-		$bbp_classes[] = bbp_get_reply_post_type() . '-edit';
-
-	} elseif ( bbp_is_reply_move() ) {
-		$bbp_classes[] = bbp_get_reply_post_type() . '-move';
-
-	} elseif ( bbp_is_single_view() ) {
-		$bbp_classes[] = 'bbp-view';
-		$bbp_classes[] = 'bbp-view-' . bbp_get_view_id();
-
-	/** User ******************************************************************/
-
-	} elseif ( bbp_is_single_user_edit() ) {
-		$bbp_classes[] = 'bbp-user-edit';
-		$bbp_classes[] = 'single';
-		$bbp_classes[] = 'singular';
-
-	} elseif ( bbp_is_single_user() ) {
-		$bbp_classes[] = 'bbp-user-page';
-		$bbp_classes[] = 'single';
-		$bbp_classes[] = 'singular';
-
-	} elseif ( bbp_is_user_home() ) {
-		$bbp_classes[] = 'bbp-user-home';
-		$bbp_classes[] = 'single';
-		$bbp_classes[] = 'singular';
-
-	} elseif ( bbp_is_user_home_edit() ) {
-		$bbp_classes[] = 'bbp-user-home-edit';
-		$bbp_classes[] = 'single';
-		$bbp_classes[] = 'singular';
-
-	} elseif ( bbp_is_topics_created() ) {
-		$bbp_classes[] = 'bbp-topics-created';
-		$bbp_classes[] = 'single';
-		$bbp_classes[] = 'singular';
-
-	} elseif ( bbp_is_replies_created() ) {
-		$bbp_classes[] = 'bbp-replies-created';
-		$bbp_classes[] = 'single';
-		$bbp_classes[] = 'singular';
-
-	} elseif ( bbp_is_favorites() ) {
-		$bbp_classes[] = 'bbp-favorites';
-		$bbp_classes[] = 'single';
-		$bbp_classes[] = 'singular';
-
-	} elseif ( bbp_is_subscriptions() ) {
-		$bbp_classes[] = 'bbp-subscriptions';
-		$bbp_classes[] = 'single';
-		$bbp_classes[] = 'singular';
-
-	/** Search ****************************************************************/
-
-	} elseif ( bbp_is_search() ) {
-		$bbp_classes[] = 'bbp-search';
-		$bbp_classes[] = 'forum-search';
-
-	} elseif ( bbp_is_search_results() ) {
-		$bbp_classes[] = 'bbp-search-results';
-		$bbp_classes[] = 'forum-search-results';
-
-	/** Shortcodes ************************************************************/
-
-	} elseif ( bbp_has_shortcode() ) {
-		$bbp_classes[] = 'bbp-shortcode';
-	}
-
-	/** General ***************************************************************/
+    // General
 
 	// Any page with bbPress content
 	if ( ! empty( $bbp_classes ) ) {
@@ -1085,7 +1064,7 @@ function bbp_body_class( $wp_classes = array(), $custom_classes = false ) {
 		$bbp_classes[] = 'no-js';
 	}
 
-	/** Clean up **************************************************************/
+    // Clean up
 
 	// Merge WP classes with bbPress classes and remove any duplicates
 	$classes = array_unique( array_merge( (array) $bbp_classes, (array) $wp_classes ) );
