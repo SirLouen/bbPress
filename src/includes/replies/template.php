@@ -550,7 +550,11 @@ function bbp_reply_title( $reply_id = 0 ) {
 		$topic_title = bbp_get_reply_topic_title( $post_id );
 
 		// Get empty reply title fallback.
-		$reply_title = sprintf( esc_html__( 'Reply To: %s', 'bbpress' ), $topic_title );
+		$reply_title = sprintf( 
+            /* translators: %s: Topic title */
+            esc_html__( 'Reply To: %s', 'bbpress' ), 
+            $topic_title 
+        );
 
 		// Filter & return
 		return apply_filters( 'bbp_get_reply_title_fallback', $reply_title, $post_id, $topic_title );
@@ -672,6 +676,7 @@ function bbp_reply_post_date( $reply_id = 0, $humanize = false, $gmt = false ) {
 		} else {
 			$date   = get_post_time( get_option( 'date_format' ), $gmt, $reply_id, true );
 			$time   = get_post_time( get_option( 'time_format' ), $gmt, $reply_id, true );
+            /* translators: 1: Date, 2: Time */
 			$result = sprintf( _x( '%1$s at %2$s', 'date at time', 'bbpress' ), $date, $time );
 		}
 
@@ -762,8 +767,10 @@ function bbp_reply_revision_log( $reply_id = 0 ) {
 
 			$r .= "\t" . '<li id="bbp-reply-revision-log-' . esc_attr( $reply_id ) . '-item-' . esc_attr( $revision->ID ) . '" class="bbp-reply-revision-log-item">' . "\n";
 			if ( ! empty( $reason ) ) {
+                /* translators: 1: Time since modification, 2: Author linked display name, 3: Modification reason */
 				$r .= "\t\t" . sprintf( esc_html__( 'This reply was modified %1$s by %2$s. Reason: %3$s', 'bbpress' ), esc_html( $since ), $author, esc_html( $reason ) ) . "\n";
 			} else {
+                /* translators: 1: Time since modification, 2: Author linked display name */
 				$r .= "\t\t" . sprintf( esc_html__( 'This reply was modified %1$s by %2$s.', 'bbpress' ), esc_html( $since ), $author ) . "\n";
 			}
 			$r .= "\t" . '</li>' . "\n";
@@ -1194,8 +1201,10 @@ function bbp_reply_author_link( $args = array() ) {
 			if ( empty( $r['link_title'] ) ) {
 				$author = bbp_get_reply_author_display_name( $reply_id );
 				$title  = empty( $anonymous )
+                    /* translators: %s: Author's display name */
 					? esc_attr__( "View %s's profile",  'bbpress' )
-					: esc_attr__( "Visit %s's website", 'bbpress' );
+					/* translators: %s: Author's display name */
+                    : esc_attr__( "Visit %s's website", 'bbpress' );
 
 				$link_title = sprintf( $title, $author );
 
@@ -2378,6 +2387,7 @@ function bbp_topic_pagination_count() {
 		if ( bbp_thread_replies() ) {
 			$walker  = new BBP_Walker_Reply();
 			$threads = absint( $walker->get_number_of_root_elements( $bbp->reply_query->posts ) - 1 );
+            /* translators: %s: Number of reply threads */
 			$retstr  = sprintf( _n( 'Viewing %1$s reply thread', 'Viewing %1$s reply threads', $threads, 'bbpress' ), bbp_number_format( $threads ) );
 
 		// We are not including the lead topic
@@ -2385,10 +2395,12 @@ function bbp_topic_pagination_count() {
 
 			// Several replies in a topic with a single page
 			if ( empty( $to_num ) ) {
+                /* translators: %1$s: Number of replies */
 				$retstr = sprintf( _n( 'Viewing %1$s reply', 'Viewing %1$s replies', $total_int, 'bbpress' ), $total_num );
 
 			// Several replies in a topic with several pages
 			} else {
+                /* translators: 1: Number of replies being viewed, 2: Starting reply number, 3: Ending reply number, 4: Total replies */
 				$retstr = sprintf( _n( 'Viewing %2$s replies (of %4$s total)', 'Viewing %1$s replies - %2$s through %3$s (of %4$s total)', $count_int, 'bbpress' ), $count_num, $from_num, $to_num, $total_num );  //phpcs:ignore
 			}
 
@@ -2397,10 +2409,12 @@ function bbp_topic_pagination_count() {
 
 			// Several posts in a topic with a single page
 			if ( empty( $to_num ) ) {
+                /* translators: %1$s: Number of posts */
 				$retstr = sprintf( _n( 'Viewing %1$s post', 'Viewing %1$s posts', $total_int, 'bbpress' ), $total_num );
 
 			// Several posts in a topic with several pages
 			} else {
+                /* translators: 1: Number of posts being viewed, 2: Starting post number, 3: Ending post number, 4: Total posts */
 				$retstr = sprintf( _n( 'Viewing %2$s post (of %4$s total)', 'Viewing %1$s posts - %2$s through %3$s (of %4$s total)', $count_int, 'bbpress' ), $count_num, $from_num, $to_num, $total_num );  //phpcs:ignore
 			}
 		}
@@ -2564,6 +2578,7 @@ function bbp_reply_to_dropdown( $reply_id = 0 ) {
 		// Default "None" text
 		$show_none = ( 0 === $reply_id )
 			? esc_attr_x( 'None', 'Default reply to dropdown text', 'bbpress' )
+            /* translators: 1: Topic ID, 2: Topic title */
 			: sprintf( esc_attr__( '%1$s - %2$s', 'bbpress' ), $topic_id, bbp_get_topic_title( $topic_id ) );
 
 		// Get the dropdown and return it

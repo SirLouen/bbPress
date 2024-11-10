@@ -139,21 +139,34 @@ function bbp_admin_repair_page() {
 									<label class="screen-reader-text" for="<?php echo esc_attr( str_replace( '_', '-', $item['id'] ) ); ?>"></label>
 									<input type="checkbox" name="checked[]" value="<?php echo esc_attr( $item['id'] ); ?>" id="<?php echo esc_attr( str_replace( '_', '-', $item['id'] ) ); ?>">
 								</th>
-								<td class="bbp-tool-title column-primary column-description" data-colname="<?php esc_html_e( 'Description', 'bbpress' ); ?>">
-									<strong><?php echo esc_html( $item['title'] ); ?></strong><?php
+								<td class="bbp-tool-title column-primary column-description" 
+									data-colname="<?php esc_html_e( 'Description', 'bbpress' ); ?>">
+									<strong><?php echo esc_html( $item['title'] ); ?></strong>
+									
+									<?php if ( ! empty( $item['description'] ) ) : ?>
+										<p class="description"><?php echo esc_html( $item['description'] ); ?></p>
+									<?php endif; ?>
 
-										// Optional description
-										if ( ! empty( $item['description'] ) ) :
-											echo '<p class="description">' . esc_html( $item['description'] ) . '</p>';
-										endif;
-
-									?><div class="row-actions hide-if-no-js">
+									<div class="row-actions hide-if-no-js">
 										<span class="run">
-											<a href="<?php bbp_admin_repair_tool_run_url( $item ); ?>" aria-label="<?php printf( esc_html__( 'Run %s', 'bbpress' ), $item['title'] ); ?>" id="<?php echo esc_attr( $item['id'] ); ?>" ><?php esc_html_e( 'Run', 'bbpress' ); ?></a>
+											<a href="<?php bbp_admin_repair_tool_run_url( $item ); ?>" 
+											id="<?php echo esc_attr( $item['id'] ); ?>"
+											aria-label="<?php 
+											printf( 
+												/* translators: %s: Repair tool title */
+												esc_html__( 'Run %s', 'bbpress' ),
+												$item['title']
+											); 
+											?>">
+												<?php esc_html_e( 'Run', 'bbpress' ); ?>
+											</a>
 										</span>
 									</div>
+
 									<button type="button" class="toggle-row">
-										<span class="screen-reader-text"><?php esc_html_e( 'Show more details', 'bbpress' ); ?></span>
+										<span class="screen-reader-text">
+											<?php esc_html_e( 'Show more details', 'bbpress' ); ?>
+										</span>
 									</button>
 								</td>
 								<td class="column-components desc" data-colname="<?php esc_html_e( 'Components', 'bbpress' ); ?>">
@@ -226,6 +239,7 @@ function bbp_admin_repair_topic_reply_count() {
 
 	// Define variables
 	$bbp_db    = bbp_db();
+	/* translators: %s: Status of the counting process */
 	$statement = esc_html__( 'Counting the number of replies in each topic&hellip; %s', 'bbpress' );
 	$result    = esc_html__( 'Failed!', 'bbpress' );
 
@@ -275,6 +289,7 @@ function bbp_admin_repair_topic_voice_count() {
 
 	// Define variables
 	$bbp_db    = bbp_db();
+	/* translators: %s: Status of the counting process */
 	$statement = esc_html__( 'Counting the number of voices in each topic&hellip; %s', 'bbpress' );
 	$result    = esc_html__( 'Failed!', 'bbpress' );
 
@@ -327,6 +342,7 @@ function bbp_admin_repair_topic_hidden_reply_count() {
 
 	// Define variables
 	$bbp_db    = bbp_db();
+	/* translators: %s: Status of the counting process */
 	$statement = esc_html__( 'Counting the number of pending, spammed, and trashed replies in each topic&hellip; %s', 'bbpress' );
 	$result    = esc_html__( 'Failed!', 'bbpress' );
 
@@ -361,6 +377,7 @@ function bbp_admin_repair_forum_topic_count() {
 
 	// Define variables
 	$bbp_db    = bbp_db();
+	/* translators: %s: Status of the counting process */
 	$statement = esc_html__( 'Counting the number of topics in each forum&hellip; %s', 'bbpress' );
 	$result    = esc_html__( 'Failed!', 'bbpress' );
 
@@ -392,6 +409,7 @@ function bbp_admin_repair_forum_topic_count() {
 function bbp_admin_repair_topic_tag_count() {
 
 	// Define variables
+	/* translators: %s: Status of the counting process */
 	$statement = esc_html__( 'Counting the number of topics in each topic-tag&hellip; %s', 'bbpress' );
 	$result    = esc_html__( 'Failed!', 'bbpress' );
 	$tax_id    = bbp_get_topic_tag_tax_id();
@@ -437,6 +455,7 @@ function bbp_admin_repair_forum_reply_count() {
 
 	// Define variables
 	$bbp_db    = bbp_db();
+	/* translators: %s: Status of the counting process */
 	$statement = esc_html__( 'Counting the number of replies in each forum&hellip; %s', 'bbpress' );
 	$result    = esc_html__( 'Failed!', 'bbpress' );
 
@@ -479,6 +498,7 @@ function bbp_admin_repair_forum_hidden_reply_count() {
 
 	// Define variables
 	$bbp_db    = bbp_db();
+	/* translators: %s: Status of the counting process */
 	$statement = esc_html__( 'Counting the number of pending, spammed, and trashed replies in each forum&hellip; %s', 'bbpress' );
 	$result    = esc_html__( 'Failed!', 'bbpress' );
 
@@ -520,6 +540,7 @@ function bbp_admin_repair_user_topic_count() {
 
 	// Define variables
 	$bbp_db      = bbp_db();
+	/* translators: %s: Status of the counting process */
 	$statement   = esc_html__( 'Counting the number of topics each user has created&hellip; %s', 'bbpress' );
 	$result      = esc_html__( 'Failed!', 'bbpress' );
 
@@ -570,6 +591,7 @@ function bbp_admin_repair_user_reply_count() {
 
 	// Define variables
 	$bbp_db      = bbp_db();
+	/* translators: %s: Status of the counting process */
 	$statement   = esc_html__( 'Counting the number of topics to which each user has replied&hellip; %s', 'bbpress' );
 	$result      = esc_html__( 'Failed!', 'bbpress' );
 
@@ -620,6 +642,7 @@ function bbp_admin_repair_user_favorites() {
 
 	// Define variables
 	$bbp_db    = bbp_db();
+	 /* translators: %s: Status of the repair process */
 	$statement = esc_html__( 'Removing unpublished topics from user favorites&hellip; %s', 'bbpress' );
 	$result    = esc_html__( 'Failed!', 'bbpress' );
 
@@ -690,6 +713,7 @@ function bbp_admin_repair_user_topic_subscriptions() {
 
 	// Define variables
 	$bbp_db    = bbp_db();
+	 /* translators: %s: Status of the repair process */
 	$statement = esc_html__( 'Removing trashed topics from user subscriptions&hellip; %s', 'bbpress' );
 	$result    = esc_html__( 'Failed!', 'bbpress' );
 
@@ -759,6 +783,7 @@ function bbp_admin_repair_user_forum_subscriptions() {
 
 	// Define variables
 	$bbp_db    = bbp_db();
+	 /* translators: %s: Status of the repair process */
 	$statement = esc_html__( 'Removing trashed forums from user subscriptions&hellip; %s', 'bbpress' );
 	$result    = esc_html__( 'Failed!', 'bbpress' );
 
@@ -825,7 +850,7 @@ function bbp_admin_repair_user_forum_subscriptions() {
  * @since 2.2.0 bbPress (r4340)
  */
 function bbp_admin_repair_user_roles() {
-
+	/* translators: %s: Status of the repair process */
 	$statement    = esc_html__( 'Remapping forum role for each user on this site&hellip; %s', 'bbpress' );
 	$changed      = 0;
 	$role_map     = bbp_get_user_role_map();
@@ -923,7 +948,7 @@ function bbp_admin_repair_user_roles() {
 			$offset = $offset + 1000;
 		}
 	}
-
+	/* translators: %s: Number of updated users */
 	$result = sprintf( esc_html__( 'Complete! %s users updated.', 'bbpress' ), bbp_number_format( $changed ) );
 
 	return array( 0, sprintf( $statement, $result ) );
@@ -940,6 +965,7 @@ function bbp_admin_repair_freshness() {
 
 	// Define variables
 	$bbp_db    = bbp_db();
+	/* translators: %s: Status of the repair process */
 	$statement = esc_html__( 'Recomputing latest post in every topic and forum&hellip; %s', 'bbpress' );
 	$result    = esc_html__( 'Failed!', 'bbpress' );
 
@@ -1061,6 +1087,7 @@ function bbp_admin_repair_sticky() {
 
 	// Define variables
 	$bbp_db    = bbp_db();
+	/* translators: %s: Status of the repair process */
 	$statement = esc_html__( 'Repairing the sticky topic to the parent forum relationships&hellip; %s', 'bbpress' );
 	$result    = esc_html__( 'Failed!', 'bbpress' );
 
@@ -1126,6 +1153,7 @@ function bbp_admin_repair_closed_topics() {
 
 	// Define variables
 	$bbp_db        = bbp_db();
+	/* translators: %s: Status of the repair process */
 	$statement     = esc_html__( 'Repairing closed topics&hellip; %s', 'bbpress' );
 	$result        = esc_html__( 'No closed topics to repair.',        'bbpress' );
 	$changed       = 0;
@@ -1157,6 +1185,7 @@ function bbp_admin_repair_closed_topics() {
 	unset( $closed_topics, $closed_topic, $topic_status );
 
 	// Complete results
+	/* translators: %d: Number of repaired topics */
 	$result = sprintf( _n( 'Complete! %d closed topic repaired.', 'Complete! %d closed topics repaired.', $changed, 'bbpress' ), $changed );
 
 	return array( 0, sprintf( $statement, $result ) );
@@ -1170,6 +1199,7 @@ function bbp_admin_repair_closed_topics() {
  * @return array An array of the status code and the message
  */
 function bbp_admin_repair_forum_visibility() {
+	/* translators: %s: Status of the repair process */
 	$statement = esc_html__( 'Recalculating forum visibility&hellip; %s', 'bbpress' );
 
 	// Bail if queries returned errors
@@ -1193,6 +1223,7 @@ function bbp_admin_repair_forum_meta() {
 
 	// Define variables
 	$bbp_db    = bbp_db();
+	/* translators: %s: Status of the repair process */
 	$statement = esc_html__( 'Recalculating the forum for each post&hellip; %s', 'bbpress' );
 	$result    = esc_html__( 'Failed!', 'bbpress' );
 
@@ -1255,6 +1286,7 @@ function bbp_admin_repair_topic_meta() {
 
 	// Define variables
 	$bbp_db    = bbp_db();
+	/* translators: %s: Status of the repair process */
 	$statement = esc_html__( 'Recalculating the topic for each post&hellip; %s', 'bbpress' );
 	$result    = esc_html__( 'Failed!', 'bbpress' );
 
@@ -1306,6 +1338,7 @@ function bbp_admin_repair_reply_menu_order() {
 
 	// Define variables
 	$bbp_db    = bbp_db();
+	/* translators: %s: Status of the repair process */
 	$statement = esc_html__( 'Recalculating reply menu order&hellip; %s', 'bbpress' );
 	$result    = esc_html__( 'No reply positions to recalculate.',         'bbpress' );
 

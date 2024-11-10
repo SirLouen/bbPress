@@ -1168,6 +1168,7 @@ function bbp_forum_topics_link( $forum_id = 0 ) {
 	function bbp_get_forum_topics_link( $forum_id = 0 ) {
 		$forum_id = bbp_get_forum_id( $forum_id );
 		$link     = bbp_get_forum_permalink( $forum_id );
+		/* translators: %s: Number of topics */
 		$topics   = sprintf( _n( '%s topic', '%s topics', bbp_get_forum_topic_count( $forum_id, true, true ), 'bbpress' ), bbp_get_forum_topic_count( $forum_id, true, false ) );
 
 		// First link never has view=all
@@ -1183,6 +1184,7 @@ function bbp_forum_topics_link( $forum_id = 0 ) {
 
 			// Hidden text
 			$deleted_num = bbp_get_forum_topic_count_hidden( $forum_id, false, false );
+			/* translators: %s: Number of hidden topics */
 			$extra       = ' ' . sprintf( _n( '(+%s hidden)', '(+%s hidden)', $deleted_int, 'bbpress' ), $deleted_num );
 
 			// Hidden link
@@ -1999,6 +2001,7 @@ function bbp_single_forum_description( $args = array() ) {
 
 		// Has replies
 		if ( ! empty( $reply_count ) ) {
+			/* translators: %s: Number of replies */
 			$reply_text = sprintf( _n( '%s reply', '%s replies', $rc_int, 'bbpress' ), $reply_count );
 		}
 
@@ -2010,6 +2013,7 @@ function bbp_single_forum_description( $args = array() ) {
 
 		// Forum has no last active data
 		} else {
+			/* translators: %s: Number of topics */
 			$topic_text      = sprintf( _n( '%s topic', '%s topics', $tc_int, 'bbpress' ), $topic_count );
 		}
 
@@ -2019,26 +2023,34 @@ function bbp_single_forum_description( $args = array() ) {
 			// Has replies
 			if ( ! empty( $reply_count ) ) {
 				$retstr = bbp_is_forum_category( $forum_id )
+					/* translators: 1: Topics link, 2: Replies text, 3: Last update time, 4: Author link */
 					? sprintf( esc_html__( 'This category has %1$s, %2$s, and was last updated %3$s by %4$s.', 'bbpress' ), $topic_text, $reply_text, $time_since, $last_updated_by )
+					/* translators: 1: Topics link, 2: Replies text, 3: Last update time, 4: Author link */
 					: sprintf( esc_html__( 'This forum has %1$s, %2$s, and was last updated %3$s by %4$s.',    'bbpress' ), $topic_text, $reply_text, $time_since, $last_updated_by );
 
 			// Only has topics
 			} else {
 				$retstr = bbp_is_forum_category( $forum_id )
+					/* translators: 1: Topics link, 2: Last update time, 3: Author link */
 					? sprintf( esc_html__( 'This category has %1$s, and was last updated %2$s by %3$s.', 'bbpress' ), $topic_text, $time_since, $last_updated_by )
+					/* translators: 1: Topics link, 2: Last update time, 3: Author link */
 					: sprintf( esc_html__( 'This forum has %1$s, and was last updated %2$s by %3$s.',    'bbpress' ), $topic_text, $time_since, $last_updated_by );
 			}
 
 		// Forum has no last active data (but does have topics & replies)
 		} elseif ( ! empty( $reply_count ) ) {
 			$retstr = bbp_is_forum_category( $forum_id )
+				/* translators: 1: Topics link, 2: Replies text */
 				? sprintf( esc_html__( 'This category has %1$s and %2$s.', 'bbpress' ), $topic_text, $reply_text )
+				/* translators: 1: Topics link, 2: Replies text */
 				: sprintf( esc_html__( 'This forum has %1$s and %2$s.',    'bbpress' ), $topic_text, $reply_text );
 
 		// Forum has no last active data or replies (but does have topics)
 		} elseif ( ! empty( $topic_count ) ) {
 			$retstr = bbp_is_forum_category( $forum_id )
+				/* translators: 1: Topics link */
 				? sprintf( esc_html__( 'This category has %1$s.', 'bbpress' ), $topic_text )
+				/* translators: 1: Topics link */
 				: sprintf( esc_html__( 'This forum has %1$s.',    'bbpress' ), $topic_text );
 
 		// Forum is empty

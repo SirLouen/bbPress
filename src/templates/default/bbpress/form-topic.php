@@ -41,9 +41,11 @@ if ( ! bbp_is_single_forum() ) : ?>
 
 					<?php
 						if ( bbp_is_topic_edit() ) :
+                            /* translators: %s: Topic title */
 							printf( esc_html__( 'Now Editing &ldquo;%s&rdquo;', 'bbpress' ), bbp_get_topic_title() );
 						else :
 							( bbp_is_single_forum() && bbp_get_forum_title() )
+                                /* translators: %s: Forum title */
 								? printf( esc_html__( 'Create New Topic in &ldquo;%s&rdquo;', 'bbpress' ), bbp_get_forum_title() )
 								: esc_html_e( 'Create New Topic', 'bbpress' );
 						endif;
@@ -82,9 +84,19 @@ if ( ! bbp_is_single_forum() ) : ?>
 					<?php do_action( 'bbp_theme_before_topic_form_title' ); ?>
 
 					<p>
-						<label for="bbp_topic_title"><?php printf( esc_html__( 'Topic Title (Maximum Length: %d):', 'bbpress' ), bbp_get_title_max_length() ); ?></label><br />
-						<input type="text" id="bbp_topic_title" value="<?php bbp_form_topic_title(); ?>" size="40" name="bbp_topic_title" maxlength="<?php bbp_title_max_length(); ?>" />
-					</p>
+                        <label for="bbp_topic_title">
+                            <?php 
+                            printf(
+                                /* translators: %d: Maximum allowed length for topic title */
+                                esc_html__( 'Topic Title (Maximum Length: %d):', 'bbpress' ),
+                                bbp_get_title_max_length()
+                            ); 
+                            ?>
+                        </label>
+                        <br />
+                        <input type="text" id="bbp_topic_title" value="<?php bbp_form_topic_title(); ?>" size="40" name="bbp_topic_title" maxlength="<?php bbp_title_max_length(); ?>" 
+                        />
+                    </p>
 
 					<?php do_action( 'bbp_theme_after_topic_form_title' ); ?>
 
@@ -225,12 +237,20 @@ if ( ! bbp_is_single_forum() ) : ?>
 <?php elseif ( bbp_is_forum_closed() ) : ?>
 
 	<div id="forum-closed-<?php bbp_forum_id(); ?>" class="bbp-forum-closed">
-		<div class="bbp-template-notice">
-			<ul>
-				<li><?php printf( esc_html__( 'The forum &#8216;%s&#8217; is closed to new topics and replies.', 'bbpress' ), bbp_get_forum_title() ); ?></li>
-			</ul>
-		</div>
-	</div>
+        <div class="bbp-template-notice">
+            <ul>
+                <li>
+                    <?php 
+                    printf(
+                        /* translators: %s: Forum title */
+                        esc_html__( 'The forum &#8216;%s&#8217; is closed to new topics and replies.', 'bbpress' ),
+                        bbp_get_forum_title()
+                    );
+                    ?>
+                </li>
+            </ul>
+        </div>
+    </div>
 
 <?php else : ?>
 
