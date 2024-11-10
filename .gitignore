@@ -16,6 +16,8 @@
 /pnpm-lock.yaml
 .vscode/
 .phpunit.result.cache
+.cache/
+package-lock.json
 
 # Output directory.
 /build/
@@ -25,3 +27,7 @@
 
 # Ignore other .gitignore files to allow for personal customizations
 .gitignore
+
+# Ignore JS from Gutenberg Blocks (generated from npm run blocks)
+blocks.js
+blocks.js.map

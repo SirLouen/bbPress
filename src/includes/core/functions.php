@@ -39,18 +39,19 @@ function bbp_version() {
 function bbp_asset_version() {
 	echo bbp_get_asset_version();
 }
-	/**
-	 * Return the bbPress asset version
-	 *
-	 * @since 2.6.7 bbPress (r7188)
-	 *
-	 * @retrun string The bbPress asset version
-	 */
-	function bbp_get_asset_version() {
-		return bbp_doing_script_debug()
-			? (string) time()
-			: bbp_get_version();
-	}
+
+/**
+ * Return the bbPress asset version
+ *
+ * @since 2.6.7 bbPress (r7188)
+ *
+ * @retrun string The bbPress asset version
+ */
+function bbp_get_asset_version() {
+    return bbp_doing_script_debug()
+        ? (string) time()
+        : bbp_get_version();
+}
 
 /**
  * Output the bbPress database version
@@ -60,16 +61,17 @@ function bbp_asset_version() {
 function bbp_db_version() {
 	echo bbp_get_db_version();
 }
-	/**
-	 * Return the bbPress database version
-	 *
-	 * @since 2.0.0 bbPress (r3468)
-	 *
-	 * @retrun string The bbPress version
-	 */
-	function bbp_get_db_version() {
-		return bbpress()->db_version;
-	}
+
+/**
+ * Return the bbPress database version
+ *
+ * @since 2.0.0 bbPress (r3468)
+ *
+ * @retrun string The bbPress version
+ */
+function bbp_get_db_version() {
+    return bbpress()->db_version;
+}
 
 /**
  * Output the bbPress database version directly from the database
@@ -79,16 +81,17 @@ function bbp_db_version() {
 function bbp_db_version_raw() {
 	echo bbp_get_db_version_raw();
 }
-	/**
-	 * Return the bbPress database version directly from the database
-	 *
-	 * @since 2.0.0 bbPress (r3468)
-	 *
-	 * @retrun string The current bbPress version
-	 */
-	function bbp_get_db_version_raw() {
-		return get_option( '_bbp_db_version', '' );
-	}
+
+/**
+ * Return the bbPress database version directly from the database
+ *
+ * @since 2.0.0 bbPress (r3468)
+ *
+ * @retrun string The current bbPress version
+ */
+function bbp_get_db_version_raw() {
+    return get_option( '_bbp_db_version', '' );
+}
 
 /** Post Meta *****************************************************************/
 

@@ -1,21 +1,23 @@
 {
-	"boss": true,
-	"browser": true,
-	"curly": true,
-	"esversion": "6",
-	"eqeqeq": true,
-	"eqnull": true,
-	"expr": true,
-	"immed": true,
-	"noarg": true,
-	"quotmark": "single",
-	"undef": false,
-	"unused": true,
-
-	"globals": {
-		"_": false,
-		"Backbone": false,
-		"jQuery": false,
-		"wp": false
-	}
+    "boss": true,
+    "browser": true,
+    "curly": true,
+    "esversion": "6",
+    "eqeqeq": true,
+    "eqnull": true,
+    "expr": true,
+    "immed": true,
+    "noarg": true,
+    "quotmark": "single",
+    "undef": false,
+    "unused": true,
+    "globals": {
+        "_": false,
+        "Backbone": false,
+        "jQuery": false,
+        "wp": false
+    },
+    "ignores": [
+        "src/includes/admin/assets/js/blocks.js"
+    ]
 }
