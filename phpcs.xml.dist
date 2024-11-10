@@ -670,8 +670,4 @@
 	<rule ref="WordPress.WP.I18n.LowLevelTranslationFunction">
 		<exclude-pattern>/src/*</exclude-pattern>
 	</rule>
-
-	<rule ref="WordPress.WP.I18n.MissingTranslatorsComment">
-		<exclude-pattern>/src/*</exclude-pattern>
-	</rule>
 </ruleset>

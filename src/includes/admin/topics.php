@@ -253,9 +253,11 @@ class BBP_Topics_Admin {
 	 * @param array $bulk_counts   Array of item counts for each message, used to build internationalized strings.
 	 */
 	public function bulk_post_updated_messages( $bulk_messages, $bulk_counts ) {
+	    /* translators: %s: Number of topics */
 		$bulk_messages['topic']['updated'] = _n( '%s topic updated.', '%s topics updated.', $bulk_counts['updated'], 'bbpress' );
 		$bulk_messages['topic']['locked']  = ( 1 === $bulk_counts['locked'] )
 			? __( '1 topic not updated, somebody is editing it.', 'bbpress' )
+			/* translators: %s: Number of topics */
 			: _n( '%s topic not updated, somebody is editing it.', '%s topics not updated, somebody is editing them.', $bulk_counts['locked'], 'bbpress' );
 
 		return $bulk_messages;
@@ -710,55 +712,73 @@ class BBP_Topics_Admin {
 		switch ( $notice ) {
 			case 'opened'    :
 				$message = ( true === $is_failure )
+					/* translators: %1$s: Topic title */
 					? sprintf( esc_html__( 'There was a problem opening the topic "%1$s".', 'bbpress' ), $topic_title )
+					/* translators: %1$s: Topic title */
 					: sprintf( esc_html__( 'Topic "%1$s" successfully opened.',             'bbpress' ), $topic_title );
 				break;
 
 			case 'closed'    :
 				$message = ( true === $is_failure )
+					/* translators: %1$s: Topic title */
 					? sprintf( esc_html__( 'There was a problem closing the topic "%1$s".', 'bbpress' ), $topic_title )
+					/* translators: %1$s: Topic title */
 					: sprintf( esc_html__( 'Topic "%1$s" successfully closed.',             'bbpress' ), $topic_title );
 				break;
 
 			case 'super_sticky' :
 				$message = ( true === $is_failure )
+					/* translators: %1$s: Topic title */
 					? sprintf( esc_html__( 'There was a problem sticking the topic "%1$s" to front.', 'bbpress' ), $topic_title )
+					/* translators: %1$s: Topic title */
 					: sprintf( esc_html__( 'Topic "%1$s" successfully stuck to front.',               'bbpress' ), $topic_title );
 				break;
 
 			case 'stuck'   :
 				$message = ( true === $is_failure )
+					/* translators: %1$s: Topic title */
 					? sprintf( esc_html__( 'There was a problem sticking the topic "%1$s".', 'bbpress' ), $topic_title )
+					/* translators: %1$s: Topic title */
 					: sprintf( esc_html__( 'Topic "%1$s" successfully stuck.',               'bbpress' ), $topic_title );
 				break;
 
 			case 'unstuck' :
 				$message = ( true === $is_failure  )
+					/* translators: %1$s: Topic title */
 					? sprintf( esc_html__( 'There was a problem unsticking the topic "%1$s".', 'bbpress' ), $topic_title )
+					/* translators: %1$s: Topic title */
 					: sprintf( esc_html__( 'Topic "%1$s" successfully unstuck.',               'bbpress' ), $topic_title );
 				break;
 
 			case 'spammed'   :
 				$message = ( true === $is_failure )
+					/* translators: %1$s: Topic title */
 					? sprintf( esc_html__( 'There was a problem marking the topic "%1$s" as spam.', 'bbpress' ), $topic_title )
+					/* translators: %1$s: Topic title */
 					: sprintf( esc_html__( 'Topic "%1$s" successfully marked as spam.',             'bbpress' ), $topic_title );
 				break;
 
 			case 'unspammed' :
 				$message = ( true === $is_failure )
+					/* translators: %1$s: Topic title */
 					? sprintf( esc_html__( 'There was a problem unmarking the topic "%1$s" as spam.', 'bbpress' ), $topic_title )
+					/* translators: %1$s: Topic title */
 					: sprintf( esc_html__( 'Topic "%1$s" successfully unmarked as spam.',             'bbpress' ), $topic_title );
 				break;
 
 			case 'approved'   :
 				$message = ( true === $is_failure )
+					/* translators: %1$s: Topic title */
 					? sprintf( esc_html__( 'There was a problem approving the topic "%1$s".', 'bbpress' ), $topic_title )
+					/* translators: %1$s: Topic title */
 					: sprintf( esc_html__( 'Topic "%1$s" successfully approved.',             'bbpress' ), $topic_title );
 				break;
 
 			case 'unapproved' :
 				$message = ( true === $is_failure )
+					/* translators: %1$s: Topic title */
 					? sprintf( esc_html__( 'There was a problem unapproving the topic "%1$s".', 'bbpress' ), $topic_title )
+					/* translators: %1$s: Topic title */
 					: sprintf( esc_html__( 'Topic "%1$s" successfully unapproved.',             'bbpress' ), $topic_title );
 				break;
 		}
@@ -972,6 +992,7 @@ class BBP_Topics_Admin {
 
 		// Show view link if it's not set, the topic is trashed and the user can view trashed topics
 		if ( empty( $actions['view'] ) && ( bbp_get_trash_status_id() === $topic->post_status ) && current_user_can( 'view_trash' ) ) {
+			/* translators: %s: Topic title */
 			$actions['view'] = '<a href="' . esc_url( $view_link ) . '" title="' . esc_attr( sprintf( __( 'View &#8220;%s&#8221;', 'bbpress' ), bbp_get_topic_title( $topic->ID ) ) ) . '" rel="permalink">' . esc_html__( 'View', 'bbpress' ) . '</a>';
 		}
 
@@ -991,6 +1012,7 @@ class BBP_Topics_Admin {
 				}
 
 				// Modify the view link
+				/* translators: %s: Topic title */
 				$actions['view'] = '<a href="' . esc_url( $view_link   ) . '" title="' . esc_attr( sprintf( __( 'View &#8220;%s&#8221;', 'bbpress' ), bbp_get_topic_title( $topic->ID ) ) ) . '" rel="permalink">' . esc_html__( 'View', 'bbpress' ) . '</a>';
 			}
 
@@ -1187,8 +1209,9 @@ class BBP_Topics_Admin {
 			4 => esc_html__( 'Topic updated.', 'bbpress' ),
 
 			// Restored from revision
-			// translators: %s: date and time of the revision
+			/* translators: %s: date and time of the revision */
 			5 => isset( $_GET['revision'] )
+					/* translators: %s: Date and time of the revision */
 					? sprintf( esc_html__( 'Topic restored to revision from %s', 'bbpress' ), wp_post_revision_title( (int) $_GET['revision'], false ) )
 					: false,
 
@@ -1215,8 +1238,8 @@ class BBP_Topics_Admin {
 			9 => sprintf(
 				'%1$s <a target="_blank" href="%2$s">%3$s</a>',
 				sprintf(
+					/* translators: Publish box date format, see http://php.net/date */
 					esc_html__( 'Topic scheduled for: %s.', 'bbpress' ),
-					// translators: Publish box date format, see http://php.net/date
 					'<strong>' . date_i18n( __( 'M j, Y @ G:i', 'bbpress' ), strtotime( $post_date ) ) . '</strong>'
 				),
 				$topic_url,
