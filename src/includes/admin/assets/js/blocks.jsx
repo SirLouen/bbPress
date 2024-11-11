@@ -6,22 +6,26 @@ const {
 
 const {
 	Placeholder,
-	TextControl
+	TextControl,
+	PanelBody,
+	PanelRow,
+	RangeControl
 } = wp.components;
 
 const {
-	BlockIcon
+	BlockIcon,
+	InspectorControls
 } = wp.blockEditor;
 
 const {
 	__
 } = wp.i18n;
 
-import ForumPicker    from './components/forumPicker';
-import ReplyPicker    from './components/replyPicker';
-import TopicPicker    from './components/topicPicker';
-import TopicTagPicker from './components/topicTagPicker';
-import ViewPicker     from './components/viewPicker';
+import ForumPicker from './components/forumPicker';
+// import ReplyPicker   from './components/replyPicker';
+// import TopicPicker    from './components/topicPicker';
+// import TopicTagPicker from './components/topicTagPicker';
+// import ViewPicker     from './components/viewPicker';
 
 /* Dashicons most relevant to us for use:
 buddicons-activity        activity
@@ -39,9 +43,9 @@ buddicons-tracking        tracking
 
 // Replaces [bbp-forum-index] – This will display your entire forum index.
 registerBlockType( 'bbpress/forum-index', {
-	title: __( 'Forums List' ),
+	title: __( 'Forums Index' ),
 	icon: 'buddicons-bbpress-logo',
-	category: 'common',
+	category: 'bbpress',
 
 	attributes: {},
 
@@ -62,7 +66,7 @@ registerBlockType( 'bbpress/forum-index', {
 registerBlockType( 'bbpress/forum-form', {
 	title: __( 'New Forum Form' ),
 	icon: 'buddicons-bbpress-logo',
-	category: 'common',
+	category: 'bbpress',
 
 	attributes: {},
 
@@ -80,43 +84,83 @@ registerBlockType( 'bbpress/forum-form', {
 } );
 
 // Replaces [bbp-single-forum id=$forum_id] – Display a single forums topics. eg. [bbp-single-forum id=32]
-registerBlockType( 'bbpress/forum', {
-	title: __( 'Single Forum' ),
-	icon: 'buddicons-bbpress-logo',
-	category: 'common',
-
-	attributes: {
-		id: {
-		//	type: 'number', // for some reason neither `number` nor `integer` works here.
-			default: 0,
-		}
-	},
-
-	edit: function( props ) {
-		return (
-			<Placeholder
-				icon={ <BlockIcon icon="buddicons-forums" /> }
-				label={ __( 'bbPress Single Forum' ) }
-				instructions={ __( 'Display a single forum’s topics.' ) }
-			>
-				<ForumPicker
-					value={ props.attributes.id }
-					options={ bbpBlocks.data.forums }
-					onChange={ id => props.setAttributes( { id } ) }
-				/>
-			</Placeholder>
-		);
-	},
-
-	save: () => null
-} );
+registerBlockType('bbpress/single-forum', {
+    title: __('Single Forum'),
+    icon: 'buddicons-bbpress-logo',
+    category: 'bbpress',
+    attributes: {
+        id: {
+            type: 'number', 
+            default: 0,    
+        },
+        topics_per_page: {
+            type: 'number',
+            default: 15,
+        }
+    },
+    edit: function(props) {
+        const { attributes, setAttributes } = props;
+        
+        return (
+            <>
+                <InspectorControls>
+                    <PanelBody title={__('Forum Settings')} initialOpen={true}>
+                        <PanelRow>
+                            <ForumPicker 
+                                value={attributes.id}
+                                onChange={(id) => {
+									console.log('Forum selection changed:', id);
+									setAttributes({ id: parseInt(id, 10) });
+								}}
+                            />
+                        </PanelRow>
+						<div style={{ marginTop: '16px' }}>
+							<RangeControl
+								label={__('Topics per page')}
+								value={attributes.topics_per_page}
+								onChange={value => setAttributes({ 
+									topics_per_page: value 
+								})}
+								min={5}
+								max={50}
+								step={5}
+								marks={[
+									{ value: 5, label: '5' },
+									{ value: 15, label: '15' },
+									{ value: 25, label: '25' },
+									{ value: 35, label: '35' },
+									{ value: 45, label: '45' }
+								]}
+								withInputField={true}
+								__nextHasNoMarginBottom
+							/>
+						</div>
+                    </PanelBody>
+                </InspectorControls>
+                <Placeholder
+                    icon={<BlockIcon icon="buddicons-forums" />}
+                    label={__('bbPress Single Forum')}
+                    instructions={__("Display a single forum's topics.")}
+                >
+                    {attributes.id 
+                        ? __('Selected forum ID: ') + attributes.id 
+                        : __('Please select a forum in the sidebar.')}
+					<br />
+					{__('Topics per page: ')} {attributes.topics_per_page}
+					
+                </Placeholder>
+            </>
+        );
+    },
+    save: () => null
+});
 
 // Topics
 // Replaces [bbp-topic-index] – Display the most recent 15 topics across all your forums with pagination.
 registerBlockType( 'bbpress/topic-index', {
 	title: __( 'Recent Topics' ),
 	icon: 'buddicons-bbpress-logo',
-	category: 'common',
+	category: 'bbpress',
 
 	attributes: {},
 
@@ -138,7 +182,7 @@ registerBlockType( 'bbpress/topic-index', {
 registerBlockType( 'bbpress/topic-form', {
 	title: __( 'New Topic Form' ),
 	icon: 'buddicons-bbpress-logo',
-	category: 'common',
+	category: 'bbpress',
 
 	attributes: {
 		forum_id: {
@@ -170,26 +214,17 @@ registerBlockType( 'bbpress/topic-form', {
 registerBlockType( 'bbpress/single-topic', {
 	title: __( 'Single Topic' ),
 	icon: 'buddicons-bbpress-logo',
-	category: 'common',
+	category: 'bbpress',
 
-	attributes: {
-		id: {
-			default: '',
-		}
-	},
+	attributes: {},
 
-	edit: function( props ) {
+	edit: function() {
 		return (
 			<Placeholder
 				icon={ <BlockIcon icon="buddicons-topics" /> }
 				label={ __( 'bbPress Single Topic' ) }
 				instructions={ __( 'Display a single topic.' ) }
-			>
-				<TopicPicker
-					value={ props.attributes.id }
-					onChange={ id => props.setAttributes( { id } ) }
-				/>
-			</Placeholder>
+			/>
 		);
 	},
 
@@ -202,7 +237,7 @@ registerBlockType( 'bbpress/single-topic', {
 registerBlockType( 'bbpress/reply-form', {
 	title: __( 'New Reply Form' ),
 	icon: 'buddicons-bbpress-logo',
-	category: 'common',
+	category: 'bbpress',
 
 	attributes: {},
 
@@ -223,26 +258,17 @@ registerBlockType( 'bbpress/reply-form', {
 registerBlockType( 'bbpress/single-reply', {
 	title: __( 'Single Reply' ),
 	icon: 'buddicons-bbpress-logo',
-	category: 'common',
+	category: 'bbpress',
 
-	attributes: {
-		id: {
-			default: '',
-		}
-	},
+	attributes: {},
 
-	edit: function( props ) {
+	edit: function() {
 		return (
 			<Placeholder
 				icon={ <BlockIcon icon="buddicons-replies" /> }
 				label={ __( 'bbPress Single Reply' ) }
 				instructions={ __( 'Display a single reply.' ) }
-			>
-				<ReplyPicker
-					value={ props.attributes.id }
-					onChange={ id => props.setAttributes( { id } ) }
-				/>
-			</Placeholder>
+			/>
 		);
 	},
 
@@ -254,7 +280,7 @@ registerBlockType( 'bbpress/single-reply', {
 registerBlockType( 'bbpress/topic-tags', {
 	title: __( 'Topic Tag Cloud' ),
 	icon: 'buddicons-bbpress-logo',
-	category: 'common',
+	category: 'bbpress',
 
 	attributes: {},
 
@@ -275,26 +301,17 @@ registerBlockType( 'bbpress/topic-tags', {
 registerBlockType( 'bbpress/single-tag', {
 	title: __( 'Single Topic Tag' ),
 	icon: 'buddicons-bbpress-logo',
-	category: 'common',
+	category: 'bbpress',
 
-	attributes: {
-		id: {
-			default: '',
-		}
-	},
+	attributes: {},
 
-	edit: function( props ) {
+	edit: function() {
 		return (
 			<Placeholder
 				icon={ <BlockIcon icon="tag" /> }
 				label={ __( 'bbPress Single Topic Tag' ) }
 				instructions={ __( 'Display a list of all topics associated with a specific topic tag.' ) }
-			>
-				<TopicTagPicker
-					value={ props.attributes.id }
-					onChange={ id => props.setAttributes( { id } ) }
-				/>
-			</Placeholder>
+			/>
 		);
 	},
 
@@ -306,13 +323,9 @@ registerBlockType( 'bbpress/single-tag', {
 registerBlockType( 'bbpress/single-view', {
 	title: __( 'Single View' ),
 	icon: 'buddicons-bbpress-logo',
-	category: 'common',
+	category: 'bbpress',
 
-	attributes: {
-		id: {
-			default: '',
-		}
-	},
+	attributes: {},
 
 	edit: function( props ) {
 		return (
@@ -320,12 +333,7 @@ registerBlockType( 'bbpress/single-view', {
 				icon={ <BlockIcon icon="media-code" /> }
 				label={ __( 'bbPress Single View' ) }
 				instructions={ __( 'Display the contents of a specific bbPress view.' ) }
-			>
-				<ViewPicker
-					value={ props.attributes.id }
-					onChange={ id => props.setAttributes( { id } ) }
-				/>
-			</Placeholder>
+			/>
 		);
 	},
 
@@ -337,7 +345,7 @@ registerBlockType( 'bbpress/single-view', {
 registerBlockType( 'bbpress/search', {
 	title: __( 'Search Results' ),
 	icon: 'buddicons-bbpress-logo',
-	category: 'common',
+	category: 'bbpress',
 
 	attributes: {
 		search: {
@@ -368,7 +376,7 @@ registerBlockType( 'bbpress/search', {
 registerBlockType( 'bbpress/search-form', {
 	title: __( 'Search Form' ),
 	icon: 'buddicons-bbpress-logo',
-	category: 'common',
+	category: 'bbpress',
 
 	attributes: {},
 
@@ -390,7 +398,7 @@ registerBlockType( 'bbpress/search-form', {
 registerBlockType( 'bbpress/login', {
 	title: __( 'Login' ),
 	icon: 'buddicons-bbpress-logo',
-	category: 'common',
+	category: 'bbpress',
 
 	attributes: {},
 
@@ -411,7 +419,7 @@ registerBlockType( 'bbpress/login', {
 registerBlockType( 'bbpress/register', {
 	title: __( 'Register' ),
 	icon: 'buddicons-bbpress-logo',
-	category: 'common',
+	category: 'bbpress',
 
 	attributes: {},
 
@@ -432,7 +440,7 @@ registerBlockType( 'bbpress/register', {
 registerBlockType( 'bbpress/lost-pass', {
 	title: __( 'Lost Password Form' ),
 	icon: 'buddicons-bbpress-logo',
-	category: 'common',
+	category: 'bbpress',
 
 	attributes: {},
 
@@ -454,7 +462,7 @@ registerBlockType( 'bbpress/lost-pass', {
 registerBlockType( 'bbpress/stats', {
 	title: __( 'Forum Statistics' ),
 	icon: 'buddicons-bbpress-logo',
-	category: 'common',
+	category: 'bbpress',
 
 	attributes: {},
 
