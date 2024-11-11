@@ -106,6 +106,8 @@ function ForumPicker( { value, onChange } ) {
 		if ( ! selectOptions ){
 			return [];
 		}
+		
+		// Map the options to a flat list.
 		let tree = selectOptions.map( ( item ) => ( {
 			id: item.id,
 			name: item.title.rendered,
@@ -124,7 +126,7 @@ function ForumPicker( { value, onChange } ) {
 			opts,
 			( item ) => item.value === currentForum?.id
 		);
-		if ( currentForum && ! optsHasForum ) {
+		if ( ! _.isEmpty(currentForum ) && ! optsHasForum ) {
 			opts.unshift( {
 				value,
 				label: currentForum.title.rendered,
@@ -133,7 +135,7 @@ function ForumPicker( { value, onChange } ) {
 		return opts;
 	}, [ selectOptions ] );
 
-	const selectLabel = __( 'Forum' );
+	const selectLabel = __( 'Select Forum' );
 
 	// Display a regular select or searchable combobox.
 	if ( bbpBlocks.data.forum_count <= maxEntriesForSelect ) {
