@@ -226,7 +226,7 @@ class BBP_BuddyPress_Members {
 		}
 
 		// Setup profile URL
-		$url = array( bp_core_get_user_domain( $user_id ) );
+		$url = array( bp_members_get_user_url( $user_id ) );
 
 		// Maybe push slug to end of URL array
 		if ( ! empty( $slug ) ) {
