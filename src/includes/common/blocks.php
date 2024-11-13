@@ -140,7 +140,7 @@ class BBP_Blocks {
 	}
 
 	/**
-	 * Passthrough function for `display_forum_index`
+	 * Display function for `display_forum_index`
 	 * The forum index view.
 	 * 
 	 * @return string The markup for the forum list view.
@@ -150,7 +150,7 @@ class BBP_Blocks {
 	}
 
 	/**
-	 * Passthrough function for `display_forum_form` -- the new forum form.
+	 * Display function for `display_forum_form` -- the new forum form.
 	 *
 	 * @return string The markup for the new forum form.
 	 */
@@ -189,7 +189,7 @@ class BBP_Blocks {
 	}
 
 	/**
-	 * Passthrough function for `display_topic_index`
+	 * Display function for `display_topic_index`
 	 * The topic list view.
 	 *
 	 * @return string The markup for the topic list view.
@@ -199,17 +199,20 @@ class BBP_Blocks {
 	}
 
 	/**
-	 * Passthrough function for `display_topic_form` 
+	 * Display function for `display_topic_form` 
 	 * The new topic form.
 	 *
 	 * @return string The markup for the new topic form.
 	 */
 	public function display_topic_form( $attributes ) {
-		return $this->shortcodes->display_topic_form( $attributes );
+		// Ensure ID is properly sanitized and exists
+		$forum_id = ! empty( $attributes['id'] ) ? absint( $attributes['id'] ) : 0;
+
+		return $this->shortcodes->display_topic_form( array( 'forum_id' => $forum_id ) );
 	}
 
 	/**
-	 * Passthrough function for `display_topic` 
+	 * Display function for `display_topic` 
 	 * The single topic view.
 	 *
 	 * @param $attributes (array) An array with at minimum an `id` 
@@ -221,7 +224,7 @@ class BBP_Blocks {
 	}
 
 	/**
-	 * Passthrough function for `display_topic_tags` 
+	 * Display function for `display_topic_tags` 
 	 * The topic tag list view.
 	 *
 	 * @return string The markup for the topic tag list view.
@@ -231,7 +234,7 @@ class BBP_Blocks {
 	}
 
 	/**
-	 * Passthrough function for `display_topics_of_tag` 
+	 * Display function for `display_topics_of_tag` 
 	 * The topics of a single tag view.
 	 * 
 	 * @param $attributes (array) An array with at minimum a slug 
@@ -243,7 +246,7 @@ class BBP_Blocks {
 	}
 
 	/**
-	 * Passthrough function for `display_reply_form` 
+	 * Display function for `display_reply_form` 
 	 * The new reply form.
 	 *
 	 * @return string The markup for the new reply form.
@@ -253,7 +256,7 @@ class BBP_Blocks {
 	}
 
 	/**
-	 * Passthrough function for `display_reply` 
+	 * Display function for `display_reply` 
 	 * The single reply view.
 	 *
 	 * @param $attributes (array) An array with at minimum an `id` key 
@@ -265,7 +268,7 @@ class BBP_Blocks {
 	}
 
 	/**
-	 * Passthrough function for `display_view` 
+	 * Display function for `display_view` 
 	 * The single view view.
 	 *
 	 * @param $attributes (array) An array with at minimum an `id` key 
@@ -277,7 +280,7 @@ class BBP_Blocks {
 	}
 
 	/**
-	 * Passthrough function for `display_search_form` 
+	 * Display function for `display_search_form` 
 	 * The search form.
 	 *
 	 * @return string The markup for the search form.
@@ -287,7 +290,7 @@ class BBP_Blocks {
 	}
 
 	/**
-	 * Passthrough function for `display_search` 
+	 * Display function for `display_search` 
 	 * The search results view.
 	 *
 	 * @param $attributes (array) An array with at minimum a `query` key 
@@ -299,7 +302,7 @@ class BBP_Blocks {
 	}
 
 	/**
-	 * Passthrough function for `display_login` 
+	 * Display function for `display_login` 
 	 * The login form.
 	 *
 	 * @return string The markup for the login form.
@@ -309,7 +312,7 @@ class BBP_Blocks {
 	}
 
 	/**
-	 * Passthrough function for `display_register` 
+	 * Display function for `display_register` 
 	 * The registration form.
 	 *
 	 * @return string The markup for the registration form.
@@ -319,7 +322,7 @@ class BBP_Blocks {
 	}
 
 	/**
-	 * Passthrough function for `display_lost_pass` 
+	 * Display function for `display_lost_pass` 
 	 * The lost password form.
 	 *
 	 * @return string The markup for the lost password form.
@@ -329,7 +332,7 @@ class BBP_Blocks {
 	}
 
 	/**
-	 * Passthrough function for `display_stats` 
+	 * Display function for `display_stats` 
 	 * The forum statistics view.
 	 *
 	 * @return string The markup for the forum statistics.
