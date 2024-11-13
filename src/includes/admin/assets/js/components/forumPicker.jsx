@@ -69,7 +69,7 @@ const buildTermsTree = ( flatTerms ) => {
 	return fillWithChildren( termsByParent[ '0' ] || [] );
 }
 
-function ForumPicker( { value, onChange } ) {
+function ForumPicker( { value = 0, onChange } ) {
 	const [ fieldValue, setFieldValue ] = useState( false );
 	const isSearching = fieldValue;
 	const postTypeSlug = bbpBlocks.data.forum_post_type;
@@ -106,6 +106,11 @@ function ForumPicker( { value, onChange } ) {
 		if ( ! selectOptions ){
 			return [];
 		}
+
+		const defaultOption = {
+			value: 0,
+			label: __('No forum selected')
+		};
 		
 		// Map the options to a flat list.
 		let tree = selectOptions.map( ( item ) => ( {
@@ -132,7 +137,7 @@ function ForumPicker( { value, onChange } ) {
 				label: currentForum.title.rendered,
 			} );
 		}
-		return opts;
+		return [defaultOption, ...opts];
 	}, [ selectOptions ] );
 
 	const selectLabel = __( 'Select Forum' );

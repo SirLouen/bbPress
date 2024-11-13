@@ -22,10 +22,10 @@ const {
 } = wp.i18n;
 
 import ForumPicker from './components/forumPicker';
-// import ReplyPicker   from './components/replyPicker';
-// import TopicPicker    from './components/topicPicker';
-// import TopicTagPicker from './components/topicTagPicker';
-// import ViewPicker     from './components/viewPicker';
+import TopicPicker    from './components/topicPicker';
+import ReplyPicker   from './components/replyPicker';
+import TopicTagPicker from './components/topicTagPicker';
+import ViewPicker     from './components/viewPicker';
 
 /* Dashicons most relevant to us for use:
 buddicons-activity        activity
@@ -185,27 +185,42 @@ registerBlockType( 'bbpress/topic-form', {
 	category: 'bbpress',
 
 	attributes: {
-		forum_id: {
-		//	type: 'number', // for some reason neither `number` nor `integer` works here.
-			default: 0,
-		}
+        id: {
+            type: 'number', 
+            default: 0,    
+        },
 	},
 
-	edit: function( props ) {
-		return (
-			<Placeholder
-				icon={ <BlockIcon icon="buddicons-topics" /> }
-				label={ __( 'bbPress New Topic Form' ) }
-				instructions={ __( 'Display a form to start a new topic.' ) }
-			>
-				<ForumPicker
-					value={ props.attributes.forum_id }
-					options={ bbpBlocks.data.forums }
-					onChange={ forum_id => props.setAttributes( { forum_id } ) }
-				/>
-			</Placeholder>
-		);
-	},
+	edit: function(props) {
+        const { attributes, setAttributes } = props;
+        
+        return (
+            <>
+                <InspectorControls>
+                    <PanelBody title={__('New Topic Form Settings')} initialOpen={true}>
+                        <PanelRow>
+                            <ForumPicker 
+                                value={attributes.id}
+                                onChange={(id) => {
+									console.log('Forum selection changed:', id);
+									setAttributes({ id: parseInt(id, 10) });
+								}}
+                            />
+                        </PanelRow>
+                    </PanelBody>
+                </InspectorControls>
+                <Placeholder
+                    icon={<BlockIcon icon="buddicons-topics" />}
+                    label={__('bbPress New Topic Form')}
+                    instructions={ __( 'Display a form to start a new topic.' ) }
+                >
+                    {attributes.id 
+                        ? __('Selected forum ID: ') + attributes.id 
+                        : __('Select optionally a forum in the sidebar.')}
+                </Placeholder>
+            </>
+        );
+    },
 
 	save: () => null
 } );
@@ -216,15 +231,24 @@ registerBlockType( 'bbpress/single-topic', {
 	icon: 'buddicons-bbpress-logo',
 	category: 'bbpress',
 
-	attributes: {},
+	attributes: {
+		id: {
+			default: '',
+		}
+	},
 
-	edit: function() {
+	edit: function( props ) {
 		return (
 			<Placeholder
 				icon={ <BlockIcon icon="buddicons-topics" /> }
 				label={ __( 'bbPress Single Topic' ) }
 				instructions={ __( 'Display a single topic.' ) }
-			/>
+			>
+				<TopicPicker
+					value={ props.attributes.id }
+					onChange={ id => props.setAttributes( { id } ) }
+				/>
+		</Placeholder>
 		);
 	},
 
@@ -233,7 +257,8 @@ registerBlockType( 'bbpress/single-topic', {
 
 // Replies
 // Replaces [bbp-reply-form] – Display the ‘New Reply’ form.
-/* Unsure how well this one works -- submissions generate a `Error: Topic ID is missing.` */
+/* TODO: Submissions generate a `Error: Topic ID is missing.` */
+/*
 registerBlockType( 'bbpress/reply-form', {
 	title: __( 'New Reply Form' ),
 	icon: 'buddicons-bbpress-logo',
@@ -253,6 +278,7 @@ registerBlockType( 'bbpress/reply-form', {
 
 	save: () => null
 } );
+*/
 
 // Replaces [bbp-single-reply id=$reply_id] – Display a single reply eg. [bbp-single-reply id=32768]
 registerBlockType( 'bbpress/single-reply', {
@@ -260,15 +286,25 @@ registerBlockType( 'bbpress/single-reply', {
 	icon: 'buddicons-bbpress-logo',
 	category: 'bbpress',
 
-	attributes: {},
+	attributes: {
+		id: {
+			default: '',
+		}
+	},
 
-	edit: function() {
+	edit: function( props ) {
 		return (
 			<Placeholder
 				icon={ <BlockIcon icon="buddicons-replies" /> }
 				label={ __( 'bbPress Single Reply' ) }
 				instructions={ __( 'Display a single reply.' ) }
-			/>
+			>
+				<ReplyPicker
+					value={ props.attributes.id }
+					onChange={ id => props.setAttributes( { id } ) }
+				/>
+			</Placeholder>
+
 		);
 	},
 
@@ -303,15 +339,24 @@ registerBlockType( 'bbpress/single-tag', {
 	icon: 'buddicons-bbpress-logo',
 	category: 'bbpress',
 
-	attributes: {},
+	attributes: {
+		id: {
+			default: '',
+		}
+	},
 
-	edit: function() {
+	edit: function( props ) {
 		return (
 			<Placeholder
 				icon={ <BlockIcon icon="tag" /> }
 				label={ __( 'bbPress Single Topic Tag' ) }
 				instructions={ __( 'Display a list of all topics associated with a specific topic tag.' ) }
-			/>
+				>
+				<TopicTagPicker
+					value={ props.attributes.id }
+					onChange={ id => props.setAttributes( { id } ) }
+				/>
+			</Placeholder>
 		);
 	},
 
@@ -325,7 +370,11 @@ registerBlockType( 'bbpress/single-view', {
 	icon: 'buddicons-bbpress-logo',
 	category: 'bbpress',
 
-	attributes: {},
+	attributes: {
+		id: {
+			default: '',
+		}
+	},
 
 	edit: function( props ) {
 		return (
@@ -333,7 +382,13 @@ registerBlockType( 'bbpress/single-view', {
 				icon={ <BlockIcon icon="media-code" /> }
 				label={ __( 'bbPress Single View' ) }
 				instructions={ __( 'Display the contents of a specific bbPress view.' ) }
-			/>
+			>
+				<ViewPicker
+					value={ props.attributes.id }
+					onChange={ id => props.setAttributes( { id } ) }
+				/>
+			</Placeholder>
+
 		);
 	},
 
